@@ -1,6 +1,6 @@
 {
   "name": "pocket-util",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple symlink utility command.",
   "license": "MIT",
   "main": "src/pocket.js",

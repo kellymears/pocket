@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
+const { realpath } = require('fs')
 const chalk = require('chalk')
-const meow = require('meow')
 const execa = require('execa')
+const meow = require('meow')
 
 /**
- * About template
+ * Description
  */
-const about = `
+const info = `
   ${chalk.yellow(`🐹  Pocket`)}
   ${chalk.italic(`A simple symlink utility command.`)}
 
@@ -36,26 +37,51 @@ const options = {
 }
 
 /**
- * Pocket
+ * Console
  */
-const pocket = meow(about, options)
-
-const hasInputs = () => pocket.input[0] && pocket.input[1]
-const lnFlags = () => {
-  if (pocket.flags[`hard`]) {
-    return;
-  }
-
-  return `-s`;
-}
-
-!hasInputs() ? console.log(about) : (async () => {
-  try {
-    await execa.command(`mv ${pocket.input[0]} ${pocket.input[1]}`)
-    await execa.command(`ln ${lnFlags()} ${pocket.input[1]} ${pocket.input[0]}`)
-  } catch (err) {
-    console.log(`${chalk.red(err)}`)
+const out = {
+  log: msg => {
+    console.log(msg)
 
     process.exit()
+  },
+
+  err: err => {
+    console.error(chalk.red(err))
+
+    process.exit()
+  },
+}
+
+/**
+ * Pocket
+ */
+const pocket = meow(info, options)
+
+const args = {
+  from: pocket.input[0] ? pocket.input[0] : null,
+  dest: pocket.input[1] ? pocket.input[1] : null,
+}
+
+const flags = (() => {
+  return ! (pocket.flags.hard) ? `-s` : ``
+})()
+
+const validate = ({ from, dest }) => {
+  if (! (from && dest)) {
+    out.log(info)
+
+    return false;
+  }
+
+  return true
+}
+
+validate(args) && (async () => {
+  try {
+    await execa.command(`mv ${args.from} ${args.dest}`)
+    await execa.command(`ln ${flags} ${args.dest} ${args.from}`)
+  } catch (err) {
+    out.err(err)
   }
 })()
