@@ -1,0 +1,19 @@
+{
+  "name": "pocket-cli",
+  "version": "1.0.0",
+  "description": "A simple symlink utility command.",
+  "license": "MIT",
+  "main": "src/pocket.js",
+  "bin": {
+    "pocket": "./src/pocket.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kellymears/pocket.git"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "execa": "^4.0.0",
+    "meow": "^6.0.1"
+  }
+}
