@@ -27,12 +27,12 @@ const options = {
   autoHelp: true,
   version: '1.0.0',
   flags: {
-		hard: {
+    hard: {
       alias: 'h',
       default: false,
-			type: 'boolean',
-		}
-	},
+      type: 'boolean',
+    },
+  },
 }
 
 /**
@@ -49,19 +49,13 @@ const lnFlags = () => {
   return `-s`;
 }
 
-! hasInputs() ? console.log(about) : (
-  async () => {
-    try {
-      await execa.command(
-        `mv ${pocket.input[0]} ${pocket.input[1]}`
-      )
+!hasInputs() ? console.log(about) : (async () => {
+  try {
+    await execa.command(`mv ${pocket.input[0]} ${pocket.input[1]}`)
+    await execa.command(`ln ${lnFlags()} ${pocket.input[1]} ${pocket.input[0]}`)
+  } catch (err) {
+    console.log(`${chalk.red(err)}`)
 
-      await execa.command(
-        `ln ${lnFlags()} ${pocket.input[1]} ${pocket.input[0]}`
-      )
-    } catch (err) {
-      console.log(`${chalk.red(err)}`)
-      process.exit()
-    }
+    process.exit()
   }
-)()
+})()
