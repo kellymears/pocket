@@ -1,5 +1,5 @@
 {
-  "name": "pocket-cli",
+  "name": "pocket-util",
   "version": "1.0.0",
   "description": "A simple symlink utility command.",
   "license": "MIT",

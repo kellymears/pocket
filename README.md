@@ -19,7 +19,7 @@ ln -s <to> <from>
 ## Install
 
 ```sh
-yarn global add pocket-cli
+yarn global add pocket-util
 ```
 
 ## Options
