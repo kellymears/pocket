@@ -42,7 +42,7 @@ const pocket = meow(about, options)
 
 const hasInputs = () => pocket.input[0] && pocket.input[1]
 const lnFlags = () => {
-  if (! pocket.flags[`hard`]) {
+  if (pocket.flags[`hard`]) {
     return;
   }
 
